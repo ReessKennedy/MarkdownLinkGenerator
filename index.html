@@ -2,44 +2,23 @@
 <html>
 <head>
   <title>Markdown Link Generator</title>
-  <style>
-    body {
-      background-color: #ddd;
-      font-family: Arial, sans-serif;
-    }
-    .spacing {
-      margin: 20px 0px 0px 20px;
-    }
-    form {
-      background-color: #fff;
-      padding: 20px;
-      max-width: 600px;
-	  margin-bottom: 0px;
-    }
-    label {
-      font-size: 10px;
-      display: block;
-    }
-    input {
-      margin-bottom: 3px;
-    }
-    #resourceInput {
-      width: 500px;
-    }
-    #widthInput {
-      width: 60px;
-    }
-    textarea {
-      min-width: 600px;
-    }
-    h3 {
-      margin: 0px;
-      font-size: 12px;
-    }
-  </style>
+<style>
+body { background-color: #ddd; font-family: Arial, sans-serif; padding: 10px; }
+.spacing { xmargin: 20px 0px 0px 20px; }
+form { background-color: #fff; padding: 10px; max-width: 600px; xmargin-bottom: 0px; border: 1px solid #767676; }
+label { font-size: 10px; display: block; }
+input { margin-bottom: 3px; }
+#resourceInput { width: 500px; }
+#widthInput { width: 60px; }
+textarea { min-width: 600px; }
+h3 { margin: 0px; font-size: 12px; }
+.fullwidth { width: 100%; }
+</style>
 </head>
 <body>
-  <form id="markdownForm" class="spacing">
+	
+	
+  <form id="markdownForm">
     <label for="resourceInput">Resource ID or Link:</label>
     <input type="text" id="resourceInput" required>
     <br>
@@ -50,7 +29,7 @@
   </form>
 
   <!-- <div id="statusBox" class="spacing"></div>--> <!-- New status box element -->
-  <div id="outputDiv" class="spacing" style="margin-top: 5px !important; "></div>
+  <div id="outputDiv" style="margin-top: 5px !important; "></div>
 
   <script>
     function check_asset_url(url, callback) {
@@ -91,7 +70,7 @@
 		  // If image is found, generate the markdown link and HTML image tag
           const markdownLink = `![${widthInput ? `|${widthInput}` : ""}](${imageLink})`;
           // const embedTag = `<img src="${imageLink}" type="application/pdf" width="${widthInput}"  />`;
-		  const imageTag = `<h3>Image:</h3><img style="max-width:${widthInput}px" src="${imageLink}" onerror="this.style.display='none'" />`;
+		  const imageTag = `<h3>Image:</h3><img style="max-width:${widthInput}px" class="fullwidth" src="${imageLink}" onerror="this.style.display='none'" />`;
 		  const pdfTag = `<h3>Pdf:</h3><div class="hidden_element"><iframe data-src="${imageLink}"></iframe></div>`;
 		  
           const outputDiv = document.getElementById("outputDiv");
@@ -100,7 +79,7 @@
 		if (status === "found") {
 		  // <p>✅ found!</p>
           outputDiv.innerHTML = `
-            <h3>Markdown link:</h3>
+            <h3>MD link:</h3>
             <textarea rows="3" readonly>${markdownLink}</textarea>
             ${imageTag}
           `;
@@ -108,7 +87,7 @@
 		  } else {
 			  
             outputDiv.innerHTML = `
-              <h3>Markdown link:</h3>
+              <h3>MD link:</h3>
               <textarea rows="3" readonly>${markdownLink}</textarea>
 			  ${pdfTag}
             `;
@@ -127,10 +106,7 @@
           // Show the outputDiv since the image is found
           outputDiv.style.display = "block";
         
-		
 
-		
-		
       });
     }
 
