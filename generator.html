@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Markdown Link Generator</title>
+  <style>
+    body {
+      background-color: #ddd;
+      font-family: Arial, sans-serif;
+    }
+    .spacing {
+      margin: 20px 0px 0px 20px;
+    }
+    form {
+      background-color: #fff;
+      padding: 20px;
+      max-width: 600px;
+	  margin-bottom: 0px;
+    }
+    label {
+      font-size: 10px;
+      display: block;
+    }
+    input {
+      margin-bottom: 3px;
+    }
+    #resourceInput {
+      width: 500px;
+    }
+    #widthInput {
+      width: 60px;
+    }
+    textarea {
+      min-width: 600px;
+    }
+    h3 {
+      margin: 0px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <form id="markdownForm" class="spacing">
+    <label for="resourceInput">Resource ID or Link:</label>
+    <input type="text" id="resourceInput" required>
+    <br>
+    <label for="widthInput">Width (optional):</label>
+    <input type="number" id="widthInput">
+    <br>
+    <button type="submit">Generate Markdown Link</button>
+  </form>
+
+  <!-- <div id="statusBox" class="spacing"></div>--> <!-- New status box element -->
+  <div id="outputDiv" class="spacing" style="margin-top: 5px !important; "></div>
+
+  <script>
+    function check_asset_url(url, callback) {
+      const img = new Image();
+      img.onload = function () {
+        callback("found");
+      };
+      img.onerror = function () {
+        callback("not found");
+      };
+      img.src = url;
+    }
+
+    function convertToMarkdownLink() {
+      const resourceInput = document.getElementById("resourceInput").value.trim();
+      const widthInput = document.getElementById("widthInput").value.trim();
+      let imageURL;
+
+      // Check if the input starts with "http"
+      if (resourceInput.startsWith("http")) {
+        // If it starts with "http", parse the input to get the ID
+        const url = new URL(resourceInput);
+        imageURL = url.searchParams.get("id");
+      } else {
+        // If it doesn't start with "http", use the input directly as the ID
+        imageURL = resourceInput;
+      }
+
+      const imageLink = `https://drive.google.com/uc?id=${imageURL}`;
+
+      // Check the asset URL and display the status in the status box
+      check_asset_url(imageLink, function (status) {
+        const statusBox = document.getElementById("statusBox");
+        
+		// Removed this
+		// statusBox.innerHTML = `<strong>Status:</strong> ${status}`;
+
+		  // If image is found, generate the markdown link and HTML image tag
+          const markdownLink = `![${widthInput ? `|${widthInput}` : ""}](${imageLink})`;
+          // const embedTag = `<img src="${imageLink}" type="application/pdf" width="${widthInput}"  />`;
+		  const imageTag = `<h3>Image:</h3><img style="max-width:${widthInput}px" src="${imageLink}" onerror="this.style.display='none'" />`;
+		  const pdfTag = `<h3>Pdf:</h3><div class="hidden_element"><iframe data-src="${imageLink}"></iframe></div>`;
+		  
+          const outputDiv = document.getElementById("outputDiv");
+		  
+		  
+		if (status === "found") {
+		  // <p>✅ found!</p>
+          outputDiv.innerHTML = `
+            <h3>Markdown link:</h3>
+            <textarea rows="3" readonly>${markdownLink}</textarea>
+            ${imageTag}
+          `;
+		  
+		  } else {
+			  
+            outputDiv.innerHTML = `
+              <h3>Markdown link:</h3>
+              <textarea rows="3" readonly>${markdownLink}</textarea>
+			  ${pdfTag}
+            `;
+			
+			  
+			   // Previous version
+	 		  // If image is not found, hide the outputDiv
+	          // const outputDiv = document.getElementById("outputDiv");
+	         //  outputDiv.style.display = "none";
+			  
+		}
+
+          // Save widthInput as a cookie
+          document.cookie = `maxWidth=${widthInput};expires=Sun, 1 Jan 2023 00:00:00 UTC;path=/`;
+
+          // Show the outputDiv since the image is found
+          outputDiv.style.display = "block";
+        
+		
+
+		
+		
+      });
+    }
+
+    // Load the maxWidth from the cookie and set it in the widthInput field
+    function loadMaxWidth() {
+      const maxWidthCookie = document.cookie.split(";").find(cookie => cookie.trim().startsWith("maxWidth="));
+      if (maxWidthCookie) {
+        const maxWidthValue = maxWidthCookie.split("=")[1];
+        document.getElementById("widthInput").value = maxWidthValue;
+      }
+    }
+
+    const form = document.getElementById("markdownForm");
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      convertToMarkdownLink();
+    });
+
+    // Load the maxWidth when the page loads
+    loadMaxWidth();
+  </script>
+</body>
+</html>
