@@ -29,10 +29,12 @@ Visit: https://mdlinks.reess.org/
 
 ### 2)
 Share an entire folder of images as public OR just publicly share individual files and copy the link create
+
 ![|400](https://drive.google.com/uc?id=1ZKalQWov637vCimiRkShBXiZeXfoaq32&usp=drive_fs)
 
 ### 3)
 Paste the link created into mdlinks.reess.org (or you can also just paste the file ID) to get the markdown link and paste that into your doc: 
+
 ![|400](https://drive.google.com/uc?id=1Z_UxZpVTKoD8mc4dPGuT8MfBJOXTa8wW&usp=drive_fs)
 
 Width control: 
