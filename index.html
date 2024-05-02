@@ -75,7 +75,7 @@
         imageURL = resourceInput;
       }
 
-      const imageLink = `https://drive.google.com/uc?id=${imageURL}`;
+      const imageLink = `https://drive.google.com/thumbnail?id=${imageURL}&sz=s4000`;
 
       check_asset_url(imageLink, function (status) {
         const statusBox = document.getElementById("statusBox");
@@ -90,7 +90,7 @@
           <table class="wrapper border">
             <tr>
               <td class="left-column">
-                <img class="gif" src="https://drive.google.com/uc?id=1m5Sh5-oROglEAGfpK-u7evfBIvOlwoTr" alt="Animated GIF">
+                <img class="gif" src="https://drive.google.com/thumbail?id=1m5Sh5-oROglEAGfpK-u7evfBIvOlwoTr&sz=s4000" alt="Animated GIF">
               </td>
               <td class="right-column">
                 <textarea class="markdown-link-textarea" readonly>${markdownLink}</textarea>
