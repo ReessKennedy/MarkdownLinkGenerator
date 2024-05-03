@@ -35,6 +35,8 @@
   <div id="outputDiv" style="margin-top: 5px !important;"></div>
 
   <script>
+
+  
     function check_asset_url(url, callback) {
       const img = new Image();
       img.onload = function () {
@@ -85,12 +87,12 @@
         const pdfTag = `<p class="non_image_note"><b>Note:</b> This is either a pdf (or non-image) asset OR your have not entered a publicly-shared link or link id. In this case, please retry!</p><div class="hidden_element"><iframe data-src="${imageLink}" style="width:${widthInput}px; height:500px;"></iframe></div>`;
 
         const outputDiv = document.getElementById("outputDiv");
-
+        // https://media.tenor.com/8KTq9czG_NgAAAAi/greentick-emoji
         var MarkdownTextArea = `
           <table class="wrapper border">
             <tr>
               <td class="left-column">
-                <img class="gif" src="https://drive.google.com/thumbail?id=1jBTeNfu7uhA_qJcrsx9s5s_Mp_ZGCn_S&sz=s4000" alt="Animated GIF">
+                <img class="gif" src="https://media.tenor.com/8KTq9czG_NgAAAAi/greentick-emoji.gif" onload="playOnce()" alt="Animated GIF">
               </td>
               <td class="right-column">
                 <textarea class="markdown-link-textarea" readonly>${markdownLink}</textarea>
